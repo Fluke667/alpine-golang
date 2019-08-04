@@ -16,10 +16,6 @@ mkdir -p /go /go/bin /go/src && \
     go get -v git.torproject.org/pluggable-transports/meek.git/meek-server && \
     go get -v git.torproject.org/pluggable-transports/snowflake.git/server && \
     go get -v git.torproject.org/pluggable-transports/snowflake.git/broker && \
-    go get -v github.com/astaxie/beego && \
-    go get -v github.com/adamwalach/openvpn-web-ui && \
-    cd /go/src/github.com/adamwalach/openvpn-web-ui && \
-    #bee run -gendoc=true && \
     
 
 apk del build-deps
