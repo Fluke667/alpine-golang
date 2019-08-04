@@ -19,7 +19,7 @@ mkdir -p /go /go/bin /go/src && \
     go get -v github.com/astaxie/beego && \
     go get -v github.com/adamwalach/openvpn-web-ui && \
     cd /go/src/github.com/adamwalach/openvpn-web-ui && \
-    bee run -gendoc=true && \
+    #bee run -gendoc=true && \
     
 
 apk del build-deps
