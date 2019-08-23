@@ -6,6 +6,8 @@ RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 RUN apk update && apk add --no-cache --virtual build-deps \      
     git build-base python python-dev python3 python3-dev bash gcc musl-dev openssl go wget && \
+    
+    go env
         
     wget -O go.tgz "https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz"; \
     tar -C /usr/local -xzf go.tgz; \
