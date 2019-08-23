@@ -31,7 +31,7 @@ RUN go get -v git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
     cd /go/src/snowflake/broker && go get -d -v && go build -v -o /go/bin/snow-broker && \
     cd /go/src/snowflake/proxy-go && go get -d -v && go build -v -o /go/bin/snow-proxy && \
     
-    apk del build-deps
+    apk del build-deps && \
     
     ls /usr/local/go && \
     ls /usr/lib/go
