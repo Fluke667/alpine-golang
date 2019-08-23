@@ -1,11 +1,11 @@
 FROM fluke667/alpine
 
-RUN apk add --no-cache ca-certificates go
+RUN apk add --no-cache ca-certificates
             
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 RUN apk update && apk add --no-cache --virtual build-deps \      
-    git build-base python python-dev python3 python3-dev bash gcc musl-dev openssl && \
+    git build-base python python-dev python3 python3-dev bash gcc musl-dev openssl go && \
         
     wget -O go.tgz "https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz"; \
     tar -C /usr/local -xzf go.tgz; \
@@ -32,5 +32,8 @@ RUN go get -v git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
     cd /go/src/snowflake/proxy-go && go get -d -v && go build -v -o /go/bin/snow-proxy && \
     
     apk del build-deps
+    
+    ls /usr/local/go && \
+    ls /usr/lib/go
     
 WORKDIR $GOPATH
