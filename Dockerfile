@@ -1,12 +1,11 @@
 FROM fluke667/alpine
 
-RUN apk add --no-cache \
-        		ca-certificates
+RUN apk add --no-cache ca-certificates go
             
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 RUN apk update && apk add --no-cache --virtual build-deps \      
-    git build-base python python-dev python3 python3-dev bash gcc musl-dev openssl go && \
+    git build-base python python-dev python3 python3-dev bash gcc musl-dev openssl && \
         
     wget -O go.tgz "https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz"; \
     tar -C /usr/local -xzf go.tgz; \
@@ -19,8 +18,7 @@ RUN apk update && apk add --no-cache --virtual build-deps \
 		/usr/local/go/pkg/bootstrap \
     /usr/local/go/pkg/obj \
 	  ; \
-	  apk del build-deps; \  
-	  \
+
     mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
     
 RUN go get -v git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
@@ -31,6 +29,8 @@ RUN go get -v git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
     #cd /go/bin && mv server snow-server && mv broker snow-broker && \
     #cd /go/src && git clone https://github.com/keroserene/snowflake.git && \
     cd /go/src/snowflake/broker && go get -d -v && go build -v -o /go/bin/snow-broker && \
-    cd /go/src/snowflake/proxy-go && go get -d -v && go build -v -o /go/bin/snow-proxy
+    cd /go/src/snowflake/proxy-go && go get -d -v && go build -v -o /go/bin/snow-proxy && \
+    
+    apk del build-deps
     
 WORKDIR $GOPATH
