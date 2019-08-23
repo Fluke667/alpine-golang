@@ -17,7 +17,7 @@ RUN apk update && apk add --no-cache --virtual build-deps \
            GOROOT_BOOTSTRAP=/usr/lib/go \
            GO111MODULE=auto \
            CGO_ENABLED=1 && \
-    wget -O go.tgz "https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz"; \
+    wget -O go.tgz "https://dl.google.com/go/go$GOLANG_VERSION.linux-amd64.tar.gz"; \
     tar -C /usr/local -xzf go.tgz; \
 	  rm go.tgz; \  
 	  \     
