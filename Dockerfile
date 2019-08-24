@@ -9,13 +9,11 @@ GO111MODULE=auto \
 PATH=/go/bin:$PATH
 
 RUN apk update && apk add --no-cache --virtual build-deps \
-build-base python python-dev python3 python3-dev && \
-#git
+git build-base python python-dev python3 python3-dev && \
 
 
     mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOROOT" && chmod -R 777 "$GOPATH" && \
     
-    go get -u gopkg.in/src-d/go-git.v4/... && \
     go get -u github.com/golang/dep/cmd/dep && \
     #
     go get -u git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
