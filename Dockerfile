@@ -9,7 +9,7 @@ RUN apk add --no-cache \
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 ENV GOLANG_VERSION 1.12.9
-ENV CGO_ENABLED=1
+ENV CGO_ENABLED=0
 
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
