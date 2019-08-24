@@ -5,7 +5,7 @@ GOOS=linux \
 GOARCH=amd64 \
 GOROOT=/usr/lib/go \
 GOPATH=/go \    
-GO111MODULE=auto \     
+GO112MODULE=auto \     
 PATH=/go/bin:$PATH
 
 RUN apk update && apk add --no-cache --virtual build-deps \
