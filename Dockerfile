@@ -3,16 +3,16 @@ FROM golang:1.12-alpine3.10
 ENV CGO_ENABLED=0 \
 GOOS=linux \
 GOARCH=amd64 \
-GOROOT=/usr/lib/go \
+#GOROOT=/usr/lib/go \
 GOPATH=/go \    
-GO112MODULE=auto \     
+#GO112MODULE=auto \     
 PATH=/go/bin:$PATH
 
 RUN apk update && apk add --no-cache --virtual build-deps \
 git build-base python python-dev python3 python3-dev && \
 
 
-    mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOROOT" && chmod -R 777 "$GOPATH" && \
+    #mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" && \
     
     go get -v github.com/golang/dep/cmd/dep && \
     #
