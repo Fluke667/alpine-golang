@@ -1,7 +1,7 @@
 FROM alpine:3.10
 
 RUN apk add --no-cache \
-		ca-certificates git wget
+		ca-certificates git wget libc6-compat
 
 # set up nsswitch.conf for Go's "netgo" implementation
 # - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275
@@ -15,6 +15,7 @@ RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
 		bash \
 		gcc \
+		musl \
 		musl-dev \
 		openssl \
 		go \
