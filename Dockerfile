@@ -1,37 +1,17 @@
 FROM fluke667/alpine
 
-RUN apk add --no-cache ca-certificates
+RUN apk update && apk add --no-cache \  
+     ca-certificates bash musl musl-dev libc6-compat openssl wget binutils isl libatomic \
+     mpfr3 mpc1 pkgconf dpkg git build-base python python-dev python3 python3-dev
             
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
-RUN apk update && apk add --no-cache --virtual build-deps \      
-    git build-base python python-dev python3 python3-dev bash gcc musl musl-dev libc6-compat openssl wget binutils isl \
-    libatomic mpfr3 mpc1 go go-bootstrap pkgconf dpkg && \
-    export GOLANG_VERSION=1.12.9 \
-           GOPATH=/go \
-           GOBIN=/go/bin \
-           GOOS=linux \
-           GOARCH=amd64 \
-           GOHOSTOS=linux \
-           GOHOSTARCH=amd64 \
-           GOROOT_BOOTSTRAP=/usr/lib/go \
-           GO111MODULE=auto \
-           CGO_ENABLED=1 && \
-    wget -O go.tgz "https://dl.google.com/go/go$GOLANG_VERSION.linux-amd64.tar.gz"; \
-    tar -C /usr/local -xzf go.tgz; \
-	  rm go.tgz; \  
-	  \     
-	  cd /usr/local/go/src; \    
-	 ./make.bash; \   
-	  \
-    rm -rf \
-		/usr/local/go/pkg/bootstrap \
-    /usr/local/go/pkg/obj \
-	  ; \
-
-    mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-    
-RUN go get -v git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
+RUN cd /tmp && wget -O go.tgz https://dl.google.com/go/go$GOLANG_VERSION.linux-amd64.tar.gz && \
+    tar -xzvf go.tgz && rm go.tgz && cd go && \
+    mkdir -p "$GOPATH" "$GOSRC" "$GOBIN" "$GOLIB" "$GOPKG" "$GOTMP" "$GOCACHE" "$GOTMPDIR" "$GOMODIR" "$GOVENDOR" && \
+    chmod -R 777 "$GOPATH" && \
+    cp -r -f bin /go && cp -r -f lib /go && cp -r -f src /go && cp -r -f pkg /go && \
+    go get -v git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
     go get -v git.torproject.org/pluggable-transports/meek.git/meek-server && \
     go get -v git.torproject.org/pluggable-transports/snowflake.git/server && \
     go get -v git.torproject.org/pluggable-transports/snowflake.git/broker && \
@@ -41,13 +21,8 @@ RUN go get -v git.torproject.org/pluggable-transports/obfs4.git/obfs4proxy && \
     cd /go/src/snowflake/broker && go get -d -v && go build -v -o /go/bin/snow-broker && \
     cd /go/src/snowflake/proxy-go && go get -d -v && go build -v -o /go/bin/snow-proxy && \
     
-    apk del build-deps && \
+    apk del build-deps
     
-    ls /usr/local/go && \
-    ls /usr/lib/go
-    
-WORKDIR $GOPATH
 
-  
     
 WORKDIR $GOPATH
