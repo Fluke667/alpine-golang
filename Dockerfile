@@ -62,6 +62,8 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 WORKDIR $GOPATH
 
+
+ADD config /config
 #COPY config/entrypoint.sh /config/entrypoint.sh
 RUN chmod a+x /config/entrypoint.sh
 ENTRYPOINT ["/config/entrypoint.sh"]
