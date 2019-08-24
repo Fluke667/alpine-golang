@@ -13,7 +13,7 @@ build-base python python-dev python3 python3-dev && \
 #git
 
 
-    mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" && \
+    mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOROOT" && chmod -R 777 "$GOPATH" && \
     
     go get -u gopkg.in/src-d/go-git.v4/... && \
     go get -u github.com/golang/dep/cmd/dep && \
