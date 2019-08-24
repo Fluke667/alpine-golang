@@ -1,7 +1,7 @@
 FROM alpine:3.10
 
 RUN apk add --no-cache \
-		ca-certificates
+		ca-certificates git wget
 
 # set up nsswitch.conf for Go's "netgo" implementation
 # - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275
@@ -61,3 +61,7 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 WORKDIR $GOPATH
+
+#COPY config/entrypoint.sh /config/entrypoint.sh
+RUN chmod a+x /config/entrypoint.sh
+ENTRYPOINT ["/config/entrypoint.sh"]
